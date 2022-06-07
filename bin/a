@@ -1,0 +1,63 @@
+#!/usr/bin/env sh
+# launch script for plan9port's Acme text editor
+
+if [ -z "$PLAN9" ]; then
+	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
+	exit 1
+fi
+if ! command -v acme 2>&1 >/dev/null; then
+	echo "error: acme not found in PATH, was plan9port installed?" 1>&2
+	exit 1
+fi
+
+# add the directory containing this script to the PATH so that other
+# Acme-specific scripts in the same # directory will be available within Acme
+bindir="$(cd -- "$(dirname "$(realpath $0)")" 2>&1 >/dev/null && pwd -P)"
+export PATH=$PATH:$bindir
+
+# rc is Plan 9's shell
+export SHELL=rc
+export acmeshell=rc
+# distance between tab stops
+export tabstop=4
+# Acme's win terminal doesn't do colors, bold, etc.
+export TERM=dumb
+# nobs removes backspaces from man pages
+export PAGER=nobs
+# E opens in Acme and waits for Put.  If git config core.editor is unset,
+# this suffices for git commit to open an Acme window.
+export EDITOR=E
+
+if command -v brave 2>&1 >/dev/null; then
+	export BROWSER=brave
+elif command -v firefox 2>&1 >/dev/null; then
+	export BROWSER=firefox
+elif command -v netsurf 2>&1 >/dev/null; then
+	export BROWSER=netsurf
+elif command -v netsurf-gtk 2>&1 >/dev/null; then
+	export BROWSER=netsurf-gtk
+fi
+
+if [ ! "$(pgrep plumber)" ]; then
+	echo starting plumber
+	plumber
+fi
+
+# Using a monospace font as the primary font and a proportional font as the
+# secondary font: the reverse of the usual convention for Acme.  I do this
+# because I work on projects which (unfortunately) make heavy use of spaces for
+# alignment and that requires a monospace font to display correctly.
+#
+# To review the available fonts:
+#
+# fontserv &
+# 9p ls font | less
+# fg
+# ^C
+FONT1=/mnt/font/Hack-Regular/11a/font
+FONT2=/mnt/font/DejaVuSans/11a/font
+
+# Run with 9 to prefer plan9port executables within Acme.
+# Run with -a to enable Indent by default on all windows.
+# Suppress error messages (might want to remove this for debugging).
+9 acme -a -f $FONT1 -F $FONT2 $* 2>/dev/null &

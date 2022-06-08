@@ -13,7 +13,7 @@ fi
 # add the directory containing this script to the PATH so that other
 # Acme-specific scripts in the same # directory will be available within Acme
 bindir="$(cd -- "$(dirname "$(realpath $0)")" 2>&1 >/dev/null && pwd -P)"
-export PATH=$PATH:$bindir
+export PATH="$PATH:$bindir"
 
 # rc is Plan 9's shell
 export SHELL=rc

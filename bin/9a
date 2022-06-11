@@ -28,10 +28,10 @@ export PAGER=nobs
 # this suffices for git commit to open an Acme window.
 export EDITOR=E
 
-if command -v brave 2>&1 >/dev/null; then
-	export BROWSER=brave
-elif command -v firefox 2>&1 >/dev/null; then
+if command -v firefox 2>&1 >/dev/null; then
 	export BROWSER=firefox
+elif command -v brave 2>&1 >/dev/null; then
+	export BROWSER=brave
 elif command -v netsurf 2>&1 >/dev/null; then
 	export BROWSER=netsurf
 elif command -v netsurf-gtk 2>&1 >/dev/null; then

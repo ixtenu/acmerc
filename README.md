@@ -1,6 +1,7 @@
 # Acme Resources
 
-Notes and supporting files for the Acme text editor.
+Notes and supporting files for the Acme text editor, specifically the version of
+Acme from [plan9port](https://9fans.github.io/plan9port/).
 
 ## Documents
 
@@ -9,11 +10,14 @@ Notes and supporting files for the Acme text editor.
   best when using Acme.
 - [links.md](links.md): Collection of Acme-related links.
 
-## Code
+## Scripts
 
 - [bin/9a](bin/9a) is an Acme launch script.  There are many like it, but this
   one is mine.
-- [bin/Eput](bin/Eput) is a crude solution for tab expansion.
+- [bin/9s](bin/9s) is a Sam launch script.  Sam is the other text editor in
+  plan9port, older and simpler.
+- [install.sh](install.sh) creates symlinks for `9a` and `9s` in `$HOME/bin`.
+- [bin/Eput](bin/Eput) is a crude solution for expanding tabs to spaces in Acme.
 - See also [ixtenu/script](https://github.com/ixtenu/script), which has several
   scripts that are useful within Acme (and elsewhere, which is why they are not
   in this repository).

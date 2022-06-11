@@ -88,4 +88,4 @@ fi
 # Run with 9 to prefer plan9port executables within Acme.
 # Run with -a so all windows start with "Indent on".
 # Suppress error messages (might want to remove this for debugging).
-9 acme -a -f $font1 -F $font2 $* 2>/dev/null &
+9 acme -a -f $font1 -F $font2 "$@" 2>/dev/null &

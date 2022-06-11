@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+# launch script for plan9port's Sam text editor
+
+if [ -z "$PLAN9" ]; then
+	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
+	exit 1
+fi
+if ! command -v sam 2>&1 >/dev/null; then
+	echo "error: sam not found in PATH, was plan9port installed?" 1>&2
+	exit 1
+fi
+
+usage() {
+	echo "usage: $0 [-t tab_stop] [file ...]" 1>&$1
+	echo "Launch the Sam text editor." 1>&$1
+	echo "Use -t tab_stop to customize distance between tab stops (default 4)." 1>&$1
+	exit $(($1 - 1))
+}
+
+tabstop=4
+while getopts t:h name; do
+	case $name in
+	t) tabstop=$OPTARG;;
+	h) usage 1;;
+	?) usage 2;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+if [ ! "$(pgrep plumber)" ]; then
+	echo starting plumber
+	plumber
+fi
+
+export tabstop
+export font=/mnt/font/Hack-Regular/11a/font
+
+9 sam "$@" &

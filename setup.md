@@ -142,14 +142,14 @@ section above.
 While Acme can be started by invoking the `acme` executable directly,
 typically it is desirable to define several environment variables and to pass
 in arguments to control the fonts.  For this reason, Acme is usually opened via
-a wrapper script.  The one in this repository is [bin/a](bin/a).
+a wrapper script.  The one in this repository is [bin/9a](bin/9a).
 
 ```sh
 # Create shortcut
 git clone https://github.com/ixtenu/acmerc ~/acmerc
-ln -s ~/acmerc/bin/a ~/bin/a
+ln -s ~/acmerc/bin/9a ~/bin/9a
 # Run Acme (asynchronous)
-a
+9a
 ```
 
 ## Helper Scripts

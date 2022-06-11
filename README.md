@@ -11,7 +11,7 @@ Notes and supporting files for the Acme text editor.
 
 ## Code
 
-- [bin/a](bin/a) is an Acme launch script.  There are many like it, but this
+- [bin/9a](bin/9a) is an Acme launch script.  There are many like it, but this
   one is mine.
 - [bin/Eput](bin/Eput) is a crude solution for tab expansion.
 - See also [ixtenu/script](https://github.com/ixtenu/script), which has several

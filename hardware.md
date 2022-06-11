@@ -156,3 +156,14 @@ eliminate the Home, End, PgUp, PgDn, and Arrow keys (located on the right side
 of the keyboard) can reduce the distance a little further, but personally I use
 those keys often enough that prefer to retain them even if it means an extra
 inch of travel distance.
+
+## Monitor
+
+Acme's flexible windowing system is well-suited to large high-resolution
+computer monitors.  I do not have experience with such monitors (all my monitors
+are 1920x1080 and most of my computers are too old to output anything better),
+but [John Floren][jft] provides [this 3838x2139 pixel screenshot][apng] showing
+what Acme is capable of when ample screen real estate is available.
+
+[jft]: https://jfloren.net/tools.html
+[apng]: https://jfloren.net/content/acme.png

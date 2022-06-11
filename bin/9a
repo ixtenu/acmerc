@@ -10,6 +10,26 @@ if ! command -v acme 2>&1 >/dev/null; then
 	exit 1
 fi
 
+usage() {
+	echo "usage: $0 [-t tab_stop] [-f] [file ...]" 1>&$1
+	echo "Launch the Acme text editor." 1>&$1
+	echo "Use -t tab_stop to customize distance between tab stops (default 4)." 1>&$1
+	echo "Use -f to have a proportional font as the primary font." 1>&$1
+	exit $(($1 - 1))
+}
+
+tabstop=4
+fopt=0
+while getopts t:fh name; do
+	case $name in
+	t) tabstop=$OPTARG;;
+	f) fopt=1;;
+	h) usage 1;;
+	?) usage 2;;
+	esac
+done
+shift $(($OPTIND - 1))
+
 # add the directory containing this script to the PATH so that other
 # Acme-specific scripts in the same directory will be available within Acme
 bindir="$(cd -- "$(dirname $(readlink -f "$0"))" 2>&1 >/dev/null && pwd -P)"
@@ -18,8 +38,8 @@ export PATH="$bindir:$PATH"
 # rc is Plan 9's shell
 export SHELL=rc
 export acmeshell=rc
-# distance between tab stops
-export tabstop=4
+# distance between tab stops (set above)
+export tabstop
 # Acme's win terminal doesn't do colors, bold, etc.
 export TERM=dumb
 # nobs removes backspaces from man pages
@@ -43,21 +63,29 @@ if [ ! "$(pgrep plumber)" ]; then
 	plumber
 fi
 
-# Using a monospace font as the primary font and a proportional font as the
-# secondary font: the reverse of the usual convention for Acme.  I do this
-# because I work on projects which (unfortunately) make heavy use of spaces for
-# alignment and that requires a monospace font to display correctly.
+# Preferred proportional and monospace fonts.  To review the available fonts:
 #
-# To review the available fonts:
-#
-# fontserv &
+# fontsrv &
 # 9p ls font | less
 # fg
 # ^C
-FONT1=/mnt/font/Hack-Regular/11a/font
-FONT2=/mnt/font/DejaVuSans/11a/font
+font_prop=/mnt/font/DejaVuSans/11a/font
+font_mono=/mnt/font/Hack-Regular/11a/font
+
+if [ $fopt -eq 0 ]; then
+	# By default, use a monospace font as the primary font and a
+	# proportional font as the secondary font: the reverse of the usual
+	# convention for Acme.  I do this because I work on projects which
+	# (unfortunately) make heavy use of spaces for alignment and that
+	# requires a monospace font to display correctly.
+	font1=$font_mono
+	font2=$font_prop
+else
+	font1=$font_prop
+	font2=$font_mono
+fi
 
 # Run with 9 to prefer plan9port executables within Acme.
-# Run with -a to enable Indent by default on all windows.
+# Run with -a so all windows start with "Indent on".
 # Suppress error messages (might want to remove this for debugging).
-9 acme -a -f $FONT1 -F $FONT2 $* 2>/dev/null &
+9 acme -a -f $font1 -F $font2 $* 2>/dev/null &

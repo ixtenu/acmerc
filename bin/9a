@@ -11,9 +11,9 @@ if ! command -v acme 2>&1 >/dev/null; then
 fi
 
 # add the directory containing this script to the PATH so that other
-# Acme-specific scripts in the same # directory will be available within Acme
+# Acme-specific scripts in the same directory will be available within Acme
 bindir="$(cd -- "$(dirname $(readlink -f "$0"))" 2>&1 >/dev/null && pwd -P)"
-export PATH="$PATH:$bindir"
+export PATH="$bindir:$PATH"
 
 # rc is Plan 9's shell
 export SHELL=rc

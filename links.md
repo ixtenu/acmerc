@@ -32,19 +32,21 @@
 
 # Acme-related Git repositories
 
-- [jinyangustc/acme-editor](https://github.com/jinyangustc/acme-editor):
-  an Acme setup repository.  Many relevant links in the README.
+- [jinyangustc/acme-editor](https://github.com/jinyangustc/acme-editor): an Acme
+  setup repository.  Many relevant links in the README.
 - [sminez/acme-corp](https://github.com/sminez/acme-corp): an Acme setup
   repository (fairly elaborate).
-- [evbogdanov/acme](https://github.com/evbogdanov/acme): an Acme
-  setup repository.
-- [jordilin/acmescripts](https://github.com/jordilin/acmescripts): Acme
-  helper scripts.
-- [mkmik/awesome-acme](https://github.com/mkmik/awesome-acme):
-  links to Acme-related tools.
-- [karahobny/acme2k](https://github.com/karahobny/acme2k): a slightly
-  modified Acme fork.  [acme-dark-theme.patch](./acme-dark-theme.patch)
-  was extracted from here.
+- [evbogdanov/acme](https://github.com/evbogdanov/acme): an Acme setup
+  repository.
+- [jlouis/plan9-setup](https://github.com/jlouis/plan9-setup): a plan9port setup
+  repository.
+- [jordilin/acmescripts](https://github.com/jordilin/acmescripts): Acme helper
+  scripts.
+- [mkmik/awesome-acme](https://github.com/mkmik/awesome-acme): links to
+  Acme-related tools.
+- [karahobny/acme2k](https://github.com/karahobny/acme2k): a slightly modified
+  Acme fork.  [acme-dark-theme.patch](./acme-dark-theme.patch) was extracted
+  from here.
 
 # Related text editors
 

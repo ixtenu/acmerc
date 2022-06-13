@@ -47,6 +47,78 @@ While `grep -R` can also be used, `rg` is faster and Git-aware (by default it
 ignores the `.git` directory and everything listed in `.gitignore`).  `rg` is
 available as a package (sometimes called `ripgrep`) on most Unix-like systems.
 
+## codesearch: indexed search for string or regex
+
+`rg` (see above) has to read every file in the directory being searched.  That
+can take a while if searching a large code base (in particular if the files are
+not cached).  By contrast, [codesearch][cs] creates an index that allows it to
+"identify a set of candidate documents and then run the full regular expression
+search against only those documents."  This _can_ be faster although these days
+with SSDs and lots of RAM for caching it won't be a huge difference in most
+cases.
+
+[cs]: https://github.com/google/codesearch
+
+To install codesearch, you have to have [Go](https://go.dev/).  Then:
+
+```sh
+go install github.com/google/codesearch/cmd/...@latest
+# Older versions of Go might need to do this instead:
+go get github.com/google/codesearch/cmd/...
+```
+
+codesearch has two executables, `cindex` and `csearch`.  `cindex` is used
+to index (or reindex) a directory, e.g.:
+
+```sh
+cindex $PLAN9/src
+```
+
+Then `csearch` is used to search the indexed directories, e.g.:
+
+```
+% csearch -n scrlresize
+/usr/local/plan9/src/cmd/acme/acme.c:553:                       scrlresize();
+/usr/local/plan9/src/cmd/acme/fns.h:17:void     scrlresize(void);
+/usr/local/plan9/src/cmd/acme/scrl.c:47:scrlresize(void)
+/usr/local/plan9/src/cmd/acme/scrl.c:64:                scrlresize();
+```
+
+Both commands can easily be run within Acme, in a `win` shell or from the
+tag bar.  As with `grep`, `csearch` needs an `-n` option to print the line
+number, which is desirable within Acme since it allows using mouse-3 to jump to
+the line.
+
+The above example used the plan9port source tree, but it's too small for
+codesearch to have a speed advantage on modern hardware.  On the machine
+I'm typing this on, `csearch scrlresize` completed in 0.00 seconds, but `rg
+scrlresize` only takes 0.02 seconds (warm cache).  Even on the much larger
+Linux kernel source tree, `rg` finishes in less than a second (warm cache) with
+any query: `csearch` is even faster, but `rg` is often fast enough.  (`grep`
+is slower than either `csearch` or `rg`.)
+
+While the theoretical speed advantages may not always be appreciable in
+practice, codesearch has another useful property: by default it adds all
+indexed directories to an index at `$HOME/.codesearch`.  This allows using
+`csearch` to search across directories that are scattered around the file
+system.  For example, you could index directories such as:
+
+```sh
+cindex $PLAN9/src
+cindex $HOME/src/linux/torvalds
+cindex /usr/include
+```
+
+With that, `csearch foobar` would search for "foobar" in all of those
+directories.  The same can be accomplished with `rg` or `grep`, but it would be
+necessary to explicitly list the directories to be searched; using `csearch`
+is more convenient.  `cindex` continues to be very fast even when many large
+source directories are indexed, so it's safe to index all your source trees.
+A functionally comparable shell script which ran `rg` across all your source
+trees would become linearly slower as more source was added and would
+cause many files to be read into the cache that you were't using (possibly
+evicting more useful cached files).
+
 ## ctags: jump to definition
 
 [ctags][uctg] "generates an index (or tag) file of language objects found
@@ -78,7 +150,7 @@ called [tag][tag].  Continuing the previous example:
 [ctagedt]: https://en.wikipedia.org/wiki/Ctags#Editors_that_support_ctags
 [tag]: https://github.com/ixtenu/script/blob/master/tag
 
-```sh
+```
 % tag readfile
 /usr/local/plan9/src/cmd/acme/acme.c:286
 /usr/local/plan9/src/cmd/acme/mail/mesg.c:333
@@ -107,7 +179,6 @@ installs its `universal-ctags` at either `/usr/local/bin/ctags` (Intel) or
 TODO: Research using the following with Acme and describe them here if they
 are useful.
 
-- [codesearch](https://github.com/google/codesearch)
 - [acme-lsp](https://github.com/fhs/acme-lsp)
 - [A](https://github.com/davidrjenni/A)
 - [acmego](https://github.com/9fans/go/tree/main/acme/acmego)

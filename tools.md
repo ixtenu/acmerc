@@ -99,7 +99,7 @@ is slower than either `csearch` or `rg`.)
 
 While the theoretical speed advantages may not always be appreciable in
 practice, codesearch has another useful property: by default it adds all
-indexed directories to an index at `$HOME/.codesearch`.  This allows using
+indexed directories to an index at `HOME/.csearchindex.`.  This allows using
 `csearch` to search across directories that are scattered around the file
 system.  For example, you could index directories such as:
 

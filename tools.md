@@ -102,7 +102,7 @@ unmaintained `exuberant-ctags`.  On macOS, be aware that Xcode includes
 installs its `universal-ctags` at either `/usr/local/bin/ctags` (Intel) or
 `/opt/homebrew/bin/ctags` (Apple Silicon): be sure to run the Homebrew version.
 
-### Others (TODO)
+## Others (TODO)
 
 TODO: Research using the following with Acme and describe them here if they
 are useful.

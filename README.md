@@ -6,6 +6,7 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 ## Documents
 
 - [setup.md](setup.md): Setting up Acme on a Unix(-like) system.
+- [tools.md](tools.md): Notes on complementary software tools.
 - [hardware.md](hardware.md): Hardware (mice and keyboards) that are
   best when using Acme.
 - [links.md](links.md): Collection of Acme-related links.

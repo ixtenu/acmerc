@@ -16,10 +16,10 @@ backspace).
 
 To control whether tab expansion is enabled, this patch implements a "Spaces"
 command which is closely modelled on the "Indent" command:
-- To enable tab expansion for the current window, execute: Spaces on
-- To disable tab expansion for the current window, execute: Spaces off
-- To enable tab expansion globally, execute: Spaces ON
-- To disable tab expansion globally, execute: Spaces OFF
+* To enable tab expansion for the current window, execute: Spaces on
+* To disable tab expansion for the current window, execute: Spaces off
+* To enable tab expansion globally, execute: Spaces ON
+* To disable tab expansion globally, execute: Spaces OFF
 
 To use with plan9port acme:
 % cd $PLAN9

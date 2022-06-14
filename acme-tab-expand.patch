@@ -1,0 +1,282 @@
+The Acme text editor does not support expanding tabs to spaces: both its
+original author and current maintainer are philosophically opposed to tab
+expansion.  However, not everyone shares those views: many projects use spaces
+for indentation and it is tedious to work on them in a text editor without
+built-in support for tab expansion.  While Indent ON (-a) helps, inserting a
+new level of indentation requires either repeatedly hitting the space bar or
+inserting tabs and remembering to convert them into spaces later.
+
+Thus, I created this patch: it updates the Acme text editor to support
+expanding tabs to spaces.  With this patch, when tab expansion is enabled,
+the tab key will insert spaces until reaching a tab stop and, additionally,
+backspace will delete spaces until reaching a tab stop.  The tab stop value
+($tabstop or whatever a Tab command has set for the current window) is used
+to determine how many spaces should be inserted (for tab) or deleted (for
+backspace).
+
+To control whether tab expansion is enabled, this patch implements a "Spaces"
+command which is closely modelled on the "Indent" command:
+- To enable tab expansion for the current window, execute: Spaces on
+- To disable tab expansion for the current window, execute: Spaces off
+- To enable tab expansion globally, execute: Spaces ON
+- To disable tab expansion globally, execute: Spaces OFF
+
+To use with plan9port acme:
+% cd $PLAN9
+% patch -p1 < acme-tab-expand.patch
+% cd src/cmd/acme
+% mk install
+
+Known to apply cleanly as of 2022-06-13 when the most recent commit touching
+src/cmd/acme was commit d0d440860f from 2021-10-19.  If subsequent changes
+cause this patch to fail to apply, please let me know by opening an issue (or
+pull request) on the GitHub repository: <https://github.com/ixtenu/acmerc>
+
+diff --git a/src/cmd/acme/dat.h b/src/cmd/acme/dat.h
+index 8a81c97d..922364be 100644
+--- a/src/cmd/acme/dat.h
++++ b/src/cmd/acme/dat.h
+@@ -241,6 +241,7 @@ struct Window
+ 	uchar	filemenu;
+ 	uchar	dirty;
+ 	uchar	autoindent;
++	uchar	tabexpand;
+ 	uchar	showdel;
+ 	int		id;
+ 	Range	addr;
+@@ -553,6 +554,7 @@ int			editing;
+ int			erroutfd;
+ int			messagesize;		/* negotiated in 9P version setup */
+ int			globalautoindent;
++int			globaltabexpand;
+ int			dodollarsigns;
+ char*		mtpt;
+ 
+diff --git a/src/cmd/acme/exec.c b/src/cmd/acme/exec.c
+index 1dd02288..2b5296ba 100644
+--- a/src/cmd/acme/exec.c
++++ b/src/cmd/acme/exec.c
+@@ -44,6 +44,7 @@ void	get(Text*, Text*, Text*, int, int, Rune*, int);
+ void	id(Text*, Text*, Text*, int, int, Rune*, int);
+ void	incl(Text*, Text*, Text*, int, int, Rune*, int);
+ void	indent(Text*, Text*, Text*, int, int, Rune*, int);
++void	spaces(Text*, Text*, Text*, int, int, Rune*, int);
+ void	xkill(Text*, Text*, Text*, int, int, Rune*, int);
+ void	local(Text*, Text*, Text*, int, int, Rune*, int);
+ void	look(Text*, Text*, Text*, int, int, Rune*, int);
+@@ -79,6 +80,7 @@ static Rune LGet[] = { 'G', 'e', 't', 0 };
+ static Rune LID[] = { 'I', 'D', 0 };
+ static Rune LIncl[] = { 'I', 'n', 'c', 'l', 0 };
+ static Rune LIndent[] = { 'I', 'n', 'd', 'e', 'n', 't', 0 };
++static Rune LSpaces[] = { 'S', 'p', 'a', 'c', 'e', 's', 0 };
+ static Rune LKill[] = { 'K', 'i', 'l', 'l', 0 };
+ static Rune LLoad[] = { 'L', 'o', 'a', 'd', 0 };
+ static Rune LLocal[] = { 'L', 'o', 'c', 'a', 'l', 0 };
+@@ -110,6 +112,7 @@ Exectab exectab[] = {
+ 	{ LID,		id,		FALSE,	XXX,		XXX		},
+ 	{ LIncl,		incl,		FALSE,	XXX,		XXX		},
+ 	{ LIndent,		indent,	FALSE,	XXX,		XXX		},
++	{ LSpaces,		spaces,	FALSE,	XXX,		XXX		},
+ 	{ LKill,		xkill,		FALSE,	XXX,		XXX		},
+ 	{ LLoad,		dump,	FALSE,	FALSE,	XXX		},
+ 	{ LLocal,		local,	FALSE,	XXX,		XXX		},
+@@ -1396,18 +1399,27 @@ enum {
+ };
+ 
+ static int
+-indentval(Rune *s, int n)
++indentval(Rune *l, Rune *s, int n)
+ {
++	int *global;
++
++	if(l == LIndent)
++		global = &globalautoindent;
++	else if(l == LSpaces)
++		global = &globaltabexpand;
++	else
++		return IError;
++
+ 	if(n < 2)
+ 		return IError;
+ 	if(runestrncmp(s, LON, n) == 0){
+-		globalautoindent = TRUE;
+-		warning(nil, "Indent ON\n");
++		*global = TRUE;
++		warning(nil, "%S ON\n", l);
+ 		return IGlobal;
+ 	}
+ 	if(runestrncmp(s, LOFF, n) == 0){
+-		globalautoindent = FALSE;
+-		warning(nil, "Indent OFF\n");
++		*global = FALSE;
++		warning(nil, "%S OFF\n", l);
+ 		return IGlobal;
+ 	}
+ 	return runestrncmp(s, Lon, n) == 0;
+@@ -1416,8 +1428,10 @@ indentval(Rune *s, int n)
+ static void
+ fixindent(Window *w, void *arg)
+ {
+-	USED(arg);
+-	w->autoindent = globalautoindent;
++	if(arg == &LIndent)
++		w->autoindent = globalautoindent;
++	else if(arg == &LSpaces)
++		w->tabexpand = globaltabexpand;
+ }
+ 
+ void
+@@ -1437,18 +1451,47 @@ indent(Text *et, Text *_0, Text *argt, int _1, int _2, Rune *arg, int narg)
+ 	autoindent = IError;
+ 	getarg(argt, FALSE, TRUE, &r, &len);
+ 	if(r!=nil && len>0)
+-		autoindent = indentval(r, len);
++		autoindent = indentval(LIndent, r, len);
+ 	else{
+ 		a = findbl(arg, narg, &na);
+ 		if(a != arg)
+-			autoindent = indentval(arg, narg-na);
++			autoindent = indentval(LIndent, arg, narg-na);
+ 	}
+ 	if(autoindent == IGlobal)
+-		allwindows(fixindent, nil);
++		allwindows(fixindent, LIndent);
+ 	else if(w != nil && autoindent >= 0)
+ 		w->autoindent = autoindent;
+ }
+ 
++void
++spaces(Text *et, Text *_0, Text *argt, int _1, int _2, Rune *arg, int narg)
++{
++	Rune *a, *r;
++	Window *w;
++	int na, len, tabexpand;
++
++	USED(_0);
++	USED(_1);
++	USED(_2);
++
++	w = nil;
++	if(et!=nil && et->w!=nil)
++		w = et->w;
++	tabexpand = IError;
++	getarg(argt, FALSE, TRUE, &r, &len);
++	if(r!=nil && len>0)
++		tabexpand = indentval(LSpaces, r, len);
++	else{
++		a = findbl(arg, narg, &na);
++		if(a != arg)
++			tabexpand = indentval(LSpaces, arg, narg-na);
++	}
++	if(tabexpand == IGlobal)
++		allwindows(fixindent, LSpaces);
++	else if(w != nil && tabexpand >= 0)
++		w->tabexpand = tabexpand;
++}
++
+ void
+ tab(Text *et, Text *_0, Text *argt, int _1, int _2, Rune *arg, int narg)
+ {
+diff --git a/src/cmd/acme/look.c b/src/cmd/acme/look.c
+index a7172b50..e73e1d4f 100644
+--- a/src/cmd/acme/look.c
++++ b/src/cmd/acme/look.c
+@@ -798,8 +798,10 @@ openfile(Text *t, Expand *e)
+ 				winaddincl(w, rp, n);
+ 			}
+ 			w->autoindent = ow->autoindent;
+-		}else
++		}else{
+ 			w->autoindent = globalautoindent;
++			w->tabexpand = globaltabexpand;
++		}
+ 		xfidlog(w, "new");
+ 	}
+ 	if(e->a1 == e->a0)
+diff --git a/src/cmd/acme/text.c b/src/cmd/acme/text.c
+index 09422dda..f6eaa03e 100644
+--- a/src/cmd/acme/text.c
++++ b/src/cmd/acme/text.c
+@@ -532,6 +532,24 @@ textreadc(Text *t, uint q)
+ 	return r;
+ }
+ 
++static int
++textcolumn(Text *t, uint q)
++{
++	int column;
++
++	column = 0;
++	while(q > 0 && textreadc(t, --q) != '\n')
++		++column;
++
++	return column;
++}
++
++static int
++fromtabstop(Text *t, uint q)
++{
++	return textcolumn(t, q) % t->w->body.tabstop;
++}
++
+ int
+ textbswidth(Text *t, Rune c)
+ {
+@@ -540,8 +558,16 @@ textbswidth(Text *t, Rune c)
+ 	int skipping;
+ 
+ 	/* there is known to be at least one character to erase */
+-	if(c == 0x08)	/* ^H: erase character */
++	if(c == 0x08){	/* ^H: erase character */
++		if(t->w->tabexpand && textreadc(t, t->q0-1) == ' '){
++			/* smart backspace: erase spaces until tab stop */
++			q = t->q0-1;
++			while(q > 0 && fromtabstop(t, q) != 0 && textreadc(t, q-1) == ' ')
++				--q;
++			return t->q0-q;
++		}
+ 		return 1;
++	}
+ 	q = t->q0;
+ 	skipping = TRUE;
+ 	while(q > 0){
+@@ -902,6 +928,15 @@ texttype(Text *t, Rune r)
+ 			}
+ 		}
+ 		break; /* fall through to normal code */
++	case '\t':
++		if(t->w->tabexpand){
++			/* tab expansion: insert spaces until next tab stop */
++			nr = t->w->body.tabstop - fromtabstop(t, t->q0);
++			rp = runemalloc(nr);
++			for(i=0; i<nr; i++)
++				rp[i] = ' ';
++		}
++		break; /* fall through to normal code */
+ 	}
+ 	/* otherwise ordinary character; just insert, typically in caches of all texts */
+ 	for(i=0; i<t->file->ntext; i++){
+diff --git a/src/cmd/acme/util.c b/src/cmd/acme/util.c
+index c153f8c1..6bdb11d3 100644
+--- a/src/cmd/acme/util.c
++++ b/src/cmd/acme/util.c
+@@ -108,6 +108,7 @@ errorwin1(Rune *dir, int ndir, Rune **incl, int nincl)
+ 		winaddincl(w, r, n);
+ 	}
+ 	w->autoindent = globalautoindent;
++	w->tabexpand = globaltabexpand;
+ 	return w;
+ }
+ 
+diff --git a/src/cmd/acme/wind.c b/src/cmd/acme/wind.c
+index 98c97368..399f3670 100644
+--- a/src/cmd/acme/wind.c
++++ b/src/cmd/acme/wind.c
+@@ -81,6 +81,7 @@ wininit(Window *w, Window *clone, Rectangle r)
+ 	w->filemenu = TRUE;
+ 	w->maxlines = w->body.fr.maxlines;
+ 	w->autoindent = globalautoindent;
++	w->tabexpand = globaltabexpand;
+ 	if(clone){
+ 		w->dirty = clone->dirty;
+ 		w->autoindent = clone->autoindent;

@@ -28,3 +28,6 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 - [acme-dark-theme.patch](acme-dark-theme.patch): Acme's (in)famous yellow and
   blue color theme is not to everyone's tastes, but can be changed by lightly
   patching the source code.
+- [acme-tab-expand.patch](acme-tab-expand.patch): Updates Acme to support
+  expanding tabs to spaces.  See the explanatory text at the beginning of the
+  patch for details.  __Warning__, this is experimental.

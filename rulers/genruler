@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ $# -ne 1 ]; then
+	echo "usage: $0 ruler_length" 2>&1
+	echo "Writes ruler_length hyphens and a newline to stdout." 2>&1
+	exit 1
+fi
+
+ruler=""
+for i in $(seq 1 $1); do
+	ruler="${ruler}-"
+done
+
+echo "$ruler"

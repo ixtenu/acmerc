@@ -36,12 +36,10 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 [acme2k]: https://github.com/karahobny/acme2k
 [ate]: acme-tab-expand.patch
 
-## Licensing
+### Patch licensing
 
-Everything here is released under the [0BSD license][0bsd], with the exception
-of the patches:
-
-[0bsd]: LICENSE
+The patches are an exception to the [0BSD license][LICENSE] used for the other
+files in this repository:
 
 - Any removed or unmodified source lines in the patch files are from Acme, which
   is released under an [an MIT license][p9plic].

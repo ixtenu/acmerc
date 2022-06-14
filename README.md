@@ -38,7 +38,7 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 
 ### Patch licensing
 
-The patches are an exception to the [0BSD license][LICENSE] used for the other
+The patches are an exception to the [0BSD license](LICENSE) used for the other
 files in this repository:
 
 - Any removed or unmodified source lines in the patch files are from Acme, which

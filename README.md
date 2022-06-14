@@ -25,9 +25,32 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 
 ## Patches
 
-- [acme-dark-theme.patch](acme-dark-theme.patch): Acme's (in)famous yellow and
-  blue color theme is not to everyone's tastes, but can be changed by lightly
-  patching the source code.
-- [acme-tab-expand.patch](acme-tab-expand.patch): Updates Acme to support
-  expanding tabs to spaces.  See the explanatory text at the beginning of the
-  patch for details.  __Warning__, this is experimental.
+- [acme-dark-theme.patch][adt]: Acme's (in)famous yellow and blue color theme is
+  not to everyone's tastes, but can be changed by lightly patching the source
+  code.  Extracted from [acme2k][acme2k].
+- [acme-tab-expand.patch][ate]: Updates Acme to support expanding tabs to
+  spaces.  See the explanatory text at the beginning of the patch for details.
+  __Warning__, this is experimental.
+
+[adt]: acme-dark-theme.patch
+[acme2k]: https://github.com/karahobny/acme2k
+[ate]: acme-tab-expand.patch
+
+## Licensing
+
+Everything here is released under the [0BSD license][0bsd], with the exception
+of the patches:
+
+[0bsd]: LICENSE
+
+- Any removed or unmodified source lines in the patch files are from Acme, which
+  is released under an [an MIT license][p9plic].
+- [acme-dark-theme.patch][adt] was extracted from acme2k.  They explicitly
+  licensed their changes to Acme under [an MIT license][a2klic].
+- [acme-tab-expand.patch][ate] is my own work and the code it adds to Acme (but
+  not the removed or unchanged lines in the patch) are [0BSD][0bsd].  Since 0BSD
+  imposes no requirements whatsoever, the resulting patched version of Acme is
+  effectively the same—from a licensing point of view—as the original version.
+
+[p9plic]: https://github.com/9fans/plan9port/blob/master/LICENSE
+[a2klic]: https://github.com/karahobny/acme2k/blob/master/docs/LICENSE.MIT

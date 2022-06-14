@@ -1,6 +1,10 @@
 These changes, including the config.h theme, were taken from:
 https://github.com/karahobny/acme2k
-(acme2k makes other changes to acme which aren't in this patch.)
+(acme2k makes other changes to Acme which aren't in this patch.)
+
+acme2k licensed their "modest modifications" to Acme (which would include the
+contents of this patch) under an MIT license, which can be found here:
+https://github.com/karahobny/acme2k/blob/master/docs/LICENSE.MIT
 
 To use with plan9port acme:
 % cd $PLAN9

@@ -47,10 +47,8 @@ of the patches:
   is released under an [an MIT license][p9plic].
 - [acme-dark-theme.patch][adt] was extracted from acme2k.  They explicitly
   licensed their changes to Acme under [an MIT license][a2klic].
-- [acme-tab-expand.patch][ate] is my own work and the code it adds to Acme (but
-  not the removed or unchanged lines in the patch) are [0BSD][0bsd].  Since 0BSD
-  imposes no requirements whatsoever, the resulting patched version of Acme is
-  effectively the same—from a licensing point of view—as the original version.
+- [acme-tab-expand.patch][ate] (my own work) is released under the [same MIT
+  license][p9plic] as Acme itself, with no additional requirements.
 
 [p9plic]: https://github.com/9fans/plan9port/blob/master/LICENSE
 [a2klic]: https://github.com/karahobny/acme2k/blob/master/docs/LICENSE.MIT

@@ -33,33 +33,6 @@ sudo apt-get install xorg-dev
 # necessary headers.  Other distributions may vary.
 ```
 
-Optional: Apply the Acme patches from this repository.  Currently, there
-are two independent patches; they don't modify the same files so they can be
-applied in either order.
-
-- [acme-dark-theme.patch](acme-dark-theme.patch) changes the Acme color theme.
-- [acme-tab-expand.patch](acme-tab-expand.patch) (__experimental__) adds
-  support for expanding tabs to spaces (for further details, refer to the text
-  at the top of the patch file).
-
-```sh
-# The patch assumes the plan9port directory is the current directory.
-cd /usr/local/plan9
-
-# On *BSD, patch(1) will be noisy ("Hmm...  The next patch looks like a unified
-# diff to me...") but it will apply the patch nonetheless.  If plan9port
-# updates the Acme source files, the patch(es) may apply with fuzz or some
-# hunks may fail to apply at all -- in the latter case, the patch(es) need to
-# be applied by hand (and then Git can be used to generate an updated version
-# for future use).
-patch -p1 < ~/acmerc/acme-dark-theme.patch
-patch -p1 < ~/acmerc/acme-tab-expand.patch
-
-# On *BSD or if the patch(es) applied with fuzz, *.orig files will be generated;
-# these have no value since the files are in a Git repository.
-rm -f src/cmd/acme/*.orig
-```
-
 Build plan9port:
 
 ```sh
@@ -73,6 +46,36 @@ of choice, e.g.:
 ```sh
 echo 'export PLAN9=/usr/local/plan9' >> ~/.zshrc
 echo 'export PATH=$PATH:$PLAN9/bin' >> ~/.zshrc
+```
+
+## Patching Acme (optional)
+
+Optionally, apply the Acme patches from this repository.  Currently, there are
+two independent patches; you can apply either or both.  If applying both, they
+can be applied in either order (they don't modify the same files).
+
+- [acme-dark-theme.patch](acme-dark-theme.patch) changes the Acme color theme.
+- [acme-tab-expand.patch](acme-tab-expand.patch) (__experimental__) adds
+  support for expanding tabs to spaces (for further details, refer to the text
+  at the top of the patch file).
+
+```sh
+# Enter the plan9port directory
+cd /usr/local/plan9
+
+# Create a branch (helps to have a branch when maintaining out-of-tree patches)
+git switch -c ixtenu-acme
+
+# Apply the patches.  If the Acme source files have been modified by the
+# upstream plan9port since the patches were generated, Git will attempt to
+# merge the changes, but if that fails you might have to resolve the merge
+# conflicts by hand.
+git am ~/acmerc/acme-dark-theme.patch
+git am ~/acmerc/acme-tab-expand.patch
+
+# Rebuild Acme
+cd src/cmd/acme
+mk install
 ```
 
 ## Installing plan9port on Windows

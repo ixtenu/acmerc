@@ -36,6 +36,8 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 [acme2k]: https://github.com/karahobny/acme2k
 [ate]: acme-tab-expand.patch
 
+Refer to [setup.md](setup.md) for instructions on using these patches.
+
 ### Patch licensing
 
 The patches are an exception to the [0BSD license](LICENSE) used for the other

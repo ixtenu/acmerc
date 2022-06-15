@@ -4,7 +4,8 @@
 
 [Plan 9 from User Space](https://9fans.github.io/plan9port/) (a.k.a. plan9port)
 ports many programs from the Plan 9 operating system, including the Acme text
-editor, to Unix-like operating systems.
+editor, to Unix-like operating systems.  For Microsoft Windows, plan9port can
+be used in WSL: refer to [setup-wsl.md](setup-wsl.md) and then return here.
 
 Obtain plan9port.  While various packages exist (e.g., in FreeBSD, Homebew, and
 the Arch Linux repositories), it is better to use the most up-to-date version,
@@ -77,76 +78,6 @@ git am ~/acmerc/acme-tab-expand.patch
 cd src/cmd/acme
 mk install
 ```
-
-## Installing plan9port on Windows
-
-Plan 9 from User Space can be installed within the Windows Subsystem for Linux
-(WSL).  I have only tried this on WSL 2 (which runs a virtualized Linux kernel),
-not the older WSL 1 (which merely emulates Linux).
-
-[Install WSL](https://docs.microsoft.com/en-us/windows/wsl/install) if you have
-not already done so.  I have only used Ubuntu (the default Linux distribution
-for WSL) but other supported distros (e.g., openSUSE or Debian) will probably
-work also.
-
-### X11 in WSL
-
-WSLg (Windows Subsystem for Linux GUI) has support for X11 or Wayland GUI
-applications.  WSLg was released as part of Windows 11 and was also available
-in Windows 10 insider builds.  If you have WSLg, skip this section.  I only
-have access to Windows 10 (and I'm not using insider builds), so I have not
-tried to use plan9port applications with WSLg, but I presume it would "just
-work".
-
-It is possible to run X11 applications (like plan9port Acme) with a pre-WSLg
-version of WSL, but this requires manual setup:
-
-- Download and install [VcXsrv](https://sourceforge.net/projects/vcxsrv/),
-  which is a version of the Xorg server that has been ported to Windows.  The
-  installation defaults are fine.
-- An "XLaunch" item will have been added to the Start Menu.  Open it.  Change
-  two of the default settings:
-  - On the first screen, the "Display number" must be `0`.
-  - On the third screen, "Disable access control" must be selected.
-  - See [here](https://github.com/microsoft/WSL/issues/4106#issuecomment-502920377)
-    for screenshots of launching VcXsrv with these settings.
-- When VcXsrv is running, there will be an X logo icon in the system tray.
-  To close VcXsrv, right click on its icon and select "Exit...".
-
-Open WSL.  Install Xorg and the X11 development headers.  For example, on
-Ubuntu:
-
-```sh
-sudo apt install xorg xorg-dev
-```
-
-Test that you can launch an X11 application:
-
-```sh
-export DISPLAY=$(/sbin/ip route | awk '/default/ { print $3 }'):0
-xcalc &
-```
-
-Add the `export DISPLAY` line to your shell's initialization file (e.g.,
-`~/.bashrc` or `~/.zshrc`).  For example:
-
-```sh
-# If running in WSL...
-if [ -d /mnt/c/Windows ]; then
-    # Set DISPLAY for VcXsrv
-    export DISPLAY=$(/sbin/ip route | awk '/default/ { print $3 }'):0
-fi
-```
-
-That's it.  Adapted from:
-[VcXsrv & Win10 "Alternative Setup"](https://sourceforge.net/p/vcxsrv/wiki/VcXsrv%20%26%20Win10/).
-
-### Install plan9port in WSL
-
-Once WSL 2 is installed, and X11 is working (either via WSLg or, as detailed
-above, via a third-party X server), plan9port can be installed as normal.
-See the [Install Plan 9 from User Space](#install-plan-9-from-user-space)
-section above.
 
 ## Running Acme
 

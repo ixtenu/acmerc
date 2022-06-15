@@ -180,3 +180,31 @@ script/install.sh
 
 For notes on tools which complement Acme (with a focus on software
 development), see [tools.md](tools.md).
+
+## Updating plan9port
+
+While plan9port does not change rapidly, it is updated.  If no patches were applied,
+updating is simple:
+
+```sh
+cd $PLAN9
+git pull
+# If there were new commits:
+./INSTALL
+```
+
+If you patched Acme, do this instead (here assuming `ixtenu-acme` is the name
+of the branch with the patched version of Acme):
+
+```sh
+cd $PLAN9
+git switch master
+git pull
+git switch ixtenu-acme
+# If there were new commits:
+git rebase master
+./INSTALL
+```
+
+`git rebase master` will attempt to merge, but if that fails, merge conflicts
+will have to be resolved by hand.

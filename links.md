@@ -99,8 +99,7 @@ below is a curated list of forks which implemented something useful.
   command, which toggles whether directory windows show dotfiles (hidden by
   default); a `Clear` command, a convenient alternative to `Edit ,d`; and more.
 
-[^spewspc]: See 9front commit [4757debd0b][spewcmt].
-[spewcmt]: https://git.9front.org/plan9front/plan9front/4757debd0b5935dae94944c35c3cac74b14aa209/commit.html
+[^spewspc]: See 9front commit [4757debd0b][https://git.9front.org/plan9front/plan9front/4757debd0b5935dae94944c35c3cac74b14aa209/commit.html].
 
 # Related text editors
 

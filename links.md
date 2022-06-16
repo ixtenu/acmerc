@@ -125,10 +125,10 @@ Tab expansion can also be enabled at start up with `-i`.  See 9front commit
   system), later ported to Plan 9 and included in plan9port.  The Plan 9
   version was ported back to Unix/X11: a standalone version of that code,
   updated and extended with new features not found in other versions of
-  Sam, is at [deadpixi/sam](https://github.com/deadpixi/sam).
-- [QED](https://github.com/phonologus/QED) an updated version of Rob Pike's
-  `qed` text editor, a line editor that was derived from Research Unix's
-  `ed` editor.  `qed` was used to write Sam.
+  sam, is at [deadpixi/sam](https://github.com/deadpixi/sam).
+- [QED](https://github.com/phonologus/QED): an updated version of the Unix
+  version of the `qed` text editor, a line editor that was derived from Unix's
+  `ed` editor.  Ancestral to sam.
 - [vis](https://github.com/martanne/vis): a terminal text editor which
   combines `vi`'s modal editing with the structural regular expressions
   used by Sam and Acme's `Edit` command.

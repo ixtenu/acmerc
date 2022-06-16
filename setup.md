@@ -17,8 +17,16 @@ sudo chown $(id -u -n):$(id -g -n) /usr/local/plan9
 git clone https://github.com/9fans/plan9port /usr/local/plan9
 ```
 
-(`/usr/local/plan9` is the "usual" directory for plan9port, but it can go
-elsewhere.)
+Notes:
+
+- `/usr/local/plan9` is the "usual" directory for plan9port, but it can go
+  elsewhere, such as `$HOME/plan9`.  Just be sure that the `PLAN9` shell
+  variable is set correctly.
+- There are many [forks](links.md#forks) of plan9port that make changes to
+  Acme that would not be accepted by upstream, such as alternate color schemes,
+  additional key bindings, or support for tab expansion.  You might want to use
+  one of these or create your own.  If so, the fork's URL can be substituted
+  above.
 
 On macOS, Xcode needs to be installed (it can be found in the Mac App Store).
 On Linux and \*BSD systems (but not macOS), plan9port uses X11; on some
@@ -47,36 +55,6 @@ of choice, e.g.:
 ```sh
 echo 'export PLAN9=/usr/local/plan9' >> ~/.zshrc
 echo 'export PATH=$PATH:$PLAN9/bin' >> ~/.zshrc
-```
-
-## Patching Acme (optional)
-
-Optionally, apply the Acme patches from this repository.  Currently, there are
-two independent patches; you can apply either or both.  If applying both, they
-can be applied in either order (they don't modify the same files).
-
-- [acme-dark-theme.patch](acme-dark-theme.patch) changes the Acme color theme.
-- [acme-tab-expand.patch](acme-tab-expand.patch) (__experimental__) adds
-  support for expanding tabs to spaces (for further details, refer to the text
-  at the top of the patch file).
-
-```sh
-# Enter the plan9port directory
-cd /usr/local/plan9
-
-# Create a branch (helps to have a branch when maintaining out-of-tree patches)
-git switch -c ixtenu-acme
-
-# Apply the patches.  If the Acme source files have been modified by the
-# upstream plan9port since the patches were generated, Git will attempt to
-# merge the changes, but if that fails you might have to resolve the merge
-# conflicts by hand.
-git am ~/acmerc/acme-dark-theme.patch
-git am ~/acmerc/acme-tab-expand.patch
-
-# Rebuild Acme
-cd src/cmd/acme
-mk install
 ```
 
 ## Running Acme
@@ -114,8 +92,8 @@ development), see [tools.md](tools.md).
 
 ## Updating plan9port
 
-While plan9port does not change rapidly, it is updated.  If no patches were applied,
-updating is simple:
+While plan9port does not change rapidly, it is updated.  If using the upstream
+plan9port, updating is simple:
 
 ```sh
 cd $PLAN9
@@ -124,18 +102,5 @@ git pull
 ./INSTALL
 ```
 
-If you patched Acme, do this instead (here assuming `ixtenu-acme` is the name
-of the branch with the patched version of Acme):
-
-```sh
-cd $PLAN9
-git switch master
-git pull
-git switch ixtenu-acme
-# If there were new commits:
-git rebase master
-./INSTALL
-```
-
-`git rebase master` will attempt to merge, but if that fails, merge conflicts
-will have to be resolved by hand.
+If using a plan9port fork, you will have to merge the upstream changes into
+your repository or branch.

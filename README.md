@@ -1,7 +1,7 @@
 # Acme Resources
 
-Notes and supporting files for the Acme text editor, specifically the version of
-Acme from [plan9port](https://9fans.github.io/plan9port/).
+Notes and supporting files for the Acme text editor, specifically the version
+of Acme from [plan9port](https://9fans.github.io/plan9port/).
 
 ## Documents
 
@@ -20,40 +20,9 @@ Acme from [plan9port](https://9fans.github.io/plan9port/).
 - [bin/9s](bin/9s) is a Sam launch script.  Sam is the other text editor in
   plan9port, older and simpler.
 - [install.sh](install.sh) creates symlinks for `9a` and `9s` in `$HOME/bin`.
-- [bin/Eput](bin/Eput) is a crude solution for expanding tabs to spaces in Acme.
-- See also [ixtenu/script](https://github.com/ixtenu/script), which has several
-  scripts that are useful within Acme (and elsewhere, which is why they are not
-  in this repository).
-
-## Patches
-
-- [acme-dark-theme.patch][adt]: Acme's (in)famous yellow and blue color theme is
-  not to everyone's tastes, but can be changed by lightly patching the source
-  code.  Extracted from [acme2k][acme2k].
-- [acme-tab-expand.patch][ate]: Updates Acme to support expanding tabs to
-  spaces.  See the explanatory text at the beginning of the patch for details.
-  __Warning__, this is experimental.
-
-[adt]: acme-dark-theme.patch
-[acme2k]: https://github.com/karahobny/acme2k
-[ate]: acme-tab-expand.patch
-
-Refer to [setup.md](setup.md) for instructions on using these patches.
-
-### Patch licensing
-
-The patches are an exception to the [0BSD license](LICENSE) used for the other
-files in this repository:
-
-- Any removed or unmodified source lines in the patch files are from Acme, which
-  is released under an [an MIT license][p9plic].
-- [acme-dark-theme.patch][adt] was extracted from acme2k.  They explicitly
-  licensed their changes to Acme under [an MIT license][a2klic].
-- [acme-tab-expand.patch][ate] (my own work) is released under the [same MIT
-  license][p9plic] as Acme itself, with no additional requirements.
-
-[p9plic]: https://github.com/9fans/plan9port/blob/master/LICENSE
-[a2klic]: https://github.com/karahobny/acme2k/blob/master/docs/LICENSE.MIT
+- [bin/Eput](bin/Eput) is a crude solution for post-hoc expansion of tabs
+  to spaces within Acme.  A better solution is to use one of the [Acme
+  forks](links.md#forks) that implement tab expansion.
 
 ## Miscellaneous
 
@@ -66,3 +35,13 @@ files in this repository:
 
 [wcpl]: https://en.wikipedia.org/wiki/Characters_per_line#In_programming
 [rsc]: https://marc.info/?l=9fans&m=121916884525962&w=2
+
+## See also
+
+- [ixtenu/plan9port](https://github.com/ixtenu/plan9port): my fork of plan9port
+  with some minor Acme customizations.  Specifically, a black-and-gray color
+  scheme, support for expanding tabs to spaces, and a few additional CUA-style
+  key bindings.
+- [ixtenu/script](https://github.com/ixtenu/script): has several scripts that
+  are useful within Acme (and elsewhere, which is why they are not in this
+  repository).

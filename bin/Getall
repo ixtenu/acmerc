@@ -12,7 +12,7 @@ command -v setpipefail >/dev/null && . "$(which setpipefail)"
 host=
 if command -v hostname >/dev/null; then
 	host="$(hostname)"
-if command -v uname >/dev/null; then
+elif command -v uname >/dev/null; then
 	host="$(uname -n)"
 elif [ -r /etc/hostname ]; then
 	host="$(cat /etc/hostname)"

@@ -20,6 +20,10 @@ of Acme from [plan9port](https://9fans.github.io/plan9port/).
 - [bin/9s](bin/9s) is a Sam launch script.  Sam is the other text editor in
   plan9port, older and simpler.
 - [install.sh](install.sh) creates symlinks for `9a` and `9s` in `$HOME/bin`.
+- [bin/Getall](bin/Getall) is a script to execute `Get` on all non-dirty
+  windows (the inverse of the built-in `Putall` command, which executes `Put`
+  on all dirty windows).  Useful after an operation like `git pull` has updated
+  many open files.
 - [bin/Eput](bin/Eput) is a crude solution for post-hoc expansion of tabs
   to spaces within Acme.  A better solution is to use one of the [Acme
   forks](links.md#forks) that implement tab expansion.

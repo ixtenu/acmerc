@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+# Execute Get on all non-dirty windows (the inverse of Putall)
+
+if [ "$winid" = "" ]; then
+	echo "$0: must be run within Acme" 2>&1
+	exit 1
+fi
+
+set -eu
+command -v setpipefail >/dev/null && . "$(which setpipefail)"
+
+host=
+if command -v hostname >/dev/null; then
+	host="$(hostname)"
+if command -v uname >/dev/null; then
+	host="$(uname -n)"
+elif [ -r /etc/hostname ]; then
+	host="$(cat /etc/hostname)"
+fi
+
+9p read acme/index |
+while IFS= read -r line; do
+	# extract some fields from the index file
+	winid="$(echo "$line" | awk '{print $1}')"
+	dirty="$(echo "$line" | awk '{print $5}')"
+	name="$(echo "$line" | awk '{print $6}')"
+
+	# skip dirty windows
+	[ $dirty -ne 0 ] && continue
+	# ignore windows which don't have file names
+	[ "$(echo "$name" | cut -c1)" != "/" ] && continue
+	# ignore +Errors windows (name ends with "/+Errors")
+	[ "$(echo "$name" | sed 's,.*/\+Errors$,,')" != "$name" ] && continue
+	# ignore win windows (name ends with "/-hostname")
+	[ ! -z "$host" -a "$(echo "$name" | sed "s,.*/-$host\$,,")" != "$name" ] && continue
+
+	# execute Get to reread the file
+	echo get | 9p write acme/$winid/ctl
+done

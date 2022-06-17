@@ -174,12 +174,56 @@ unmaintained `exuberant-ctags`.  On macOS, be aware that Xcode includes
 installs its `universal-ctags` at either `/usr/local/bin/ctags` (Intel) or
 `/opt/homebrew/bin/ctags` (Apple Silicon): be sure to run the Homebrew version.
 
-## Others (TODO)
+## Other development tools (TODO)
 
 TODO: Research using the following with Acme and describe them here if they
 are useful.
 
 - [acme-lsp](https://github.com/fhs/acme-lsp)
+- [clangd](https://marc.info/?l=9fans&m=162945705107609&w=2)
 - [A](https://github.com/davidrjenni/A)
 - [acmego](https://github.com/9fans/go/tree/main/acme/acmego)
-- [clangd](https://marc.info/?l=9fans&m=162945705107609&w=2)
+
+## ssh and sshfs: remote editing
+
+Acme is a GUI program which complicates editing files on a remote host, but
+only slightly.
+
+### SSH X11 forwarding
+
+[ssh][ossh] implements X11 forwarding, which allows the local client to render
+X11 applications running on the remote host.  This is the traditional method of
+running GUI applications in an `ssh` session.  X11 forwarding must be enabled
+both on the client and the remote:
+
+[ossh]: https://www.openssh.com/
+
+- The remote must have `X11Forwarding yes` in its `/etc/ssh/sshd_config`.
+  If `sshd_config` is edited to change this, `sshd` must be restarted.
+- The client must connect with `ssh -X` or have `ForwardX11 yes` in
+  `$HOME/.ssh/config`.
+
+With X11 forwarding, you can `ssh -X` into the remote host and run its local
+copy of Acme as usual.  However, this has several limitations:
+
+- It requires that the remote host has plan9port installed.
+- There is a noticeable UI lag, even for nearby hosts.
+- Acme running on the remote host will only have access to the remote file
+  system.  Often it would be more useful to have both local and remote files in
+  the same text editor session.
+
+### SSHFS
+
+[SSHFS][ghssshfs] is a more convenient solution for editing files on remote
+systems.  It uses SSH and FUSE to mount a remote directory in the local file
+system.  This allows any local application (including Acme) to access the
+remote files as if they were local files.  Basic sshfs usage is simple:
+
+```
+sshfs [user@]hostname:[directory] mountpoint
+```
+
+`[user@]` if omitted defaults to the local username and `[directory]` if
+omitted defaults to the user's home directory.
+
+[ghssshfs]: https://github.com/libfuse/sshfs

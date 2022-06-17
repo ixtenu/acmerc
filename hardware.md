@@ -147,6 +147,7 @@ keyboards that I have:
 
 - Unicomp Model M (104-key full-sized and unusually bulky): 13 inches
 - CODE Keyboard (104-key full-sized): 11 inches
+- CODE Keyboard (87-key compact): 7 inches
 - Keychron K2 v2 (84-key compact): 6 inches
 - System76 Launch Keyboard (84-key compact): 6 inches
 - Happy Hacking Professional 2nd Generation (60-key subcompact): 5 inches

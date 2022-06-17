@@ -77,8 +77,13 @@ fi
 # 9p ls font | less
 # fg
 # ^C
-font_prop=/mnt/font/DejaVuSans/11a/font
-font_mono=/mnt/font/Hack-Regular/11a/font
+if [ "$(uname)" = "Darwin" ]; then
+	font_prop='/mnt/font/LucidaGrande/15a/font'
+	font_mono='/mnt/font/Monaco/15a/font'
+else
+	font_prop='/mnt/font/DejaVuSans/11a/font'
+	font_mono='/mnt/font/Hack-Regular/11a/font'
+fi
 
 if [ $fopt -eq 0 ]; then
 	# By default, use a monospace font as the primary font and a

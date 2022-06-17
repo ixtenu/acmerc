@@ -24,9 +24,6 @@ of Acme from [plan9port](https://9fans.github.io/plan9port/).
   windows (the inverse of the built-in `Putall` command, which executes `Put`
   on all dirty windows).  Useful after an operation like `git pull` has updated
   many open files.
-- [bin/Eput](bin/Eput) is a crude solution for post-hoc expansion of tabs
-  to spaces within Acme.  A better solution is to use one of the [Acme
-  forks](links.md#forks) that implement tab expansion.
 
 ## Miscellaneous
 

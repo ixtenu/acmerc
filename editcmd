@@ -1,0 +1,15 @@
+Useful arguments for the Edit command:
+
+.+#0/old/c/new/
+Search for old, replace it with new, and highlight the replacement.  If the
+change is bad, Undo.  Repeat the Edit to move onto the next replacement.
+
+-/text/
+$-/text/
+Search backward.  With $: from EOF.
+
+X D
+Close all files which have been Put.
+
+,d
+Delete everything in the buffer.

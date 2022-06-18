@@ -33,6 +33,7 @@ of Acme from [plan9port](https://9fans.github.io/plan9port/).
   Cox][rsc]) is to place a ruler file (such as those in the linked directory)
   above the edited window which provides a visual guide to when a line is too
   long (assuming both windows are using the monospaced font).
+- [editcmd](editcmd): useful arguments to the `Edit` command.
 
 [wcpl]: https://en.wikipedia.org/wiki/Characters_per_line#In_programming
 [rsc]: https://marc.info/?l=9fans&m=121916884525962&w=2

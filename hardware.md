@@ -2,32 +2,38 @@
 
 ## Mouse
 
-Acme was designed for a three-button mouse.  Any three-button mouse can be
-used; however, some are better than others.  In Acme jargon, the left button
-is button-1, the middle button is button-2, and the right button is button-3.
-On most mice, button-2 is activated by clicking on the scrollwheel.  Many mice
-have tiny scrollwheels which are not as easy to click as the other two buttons;
-mice with wider scrollwheels are better.  The ideal mouse for lengthy Acme
-sessions has a dedicated button for button-2, just like the other two buttons
-and situated between them.  Unfortunately, such mice are specialty items;
-many of the available models are 1990s vintage and have no scrollwheel
-(or substitute), which makes them quite unappealing.  However, there are
-several good options.  The 9fans thread from 2022, ["acme and sam - mouse
-suggestions?"][asm], has numerous suggestions, some of which are discussed
-below.
+Acme was designed for a three-button mouse.  Any three-button mouse can be used;
+however, some are better than others.  In Acme jargon, the left button is
+button-1, the middle button is button-2, and the right button is button-3.  On
+most mice, button-2 is activated by clicking on the scroll wheel.  Many mice
+have tiny scroll wheels which are not as easy to click as the other two buttons;
+mice with wider scroll wheels are better.  The ideal mouse for lengthy Acme
+sessions has a dedicated button-2, just like the other two buttons and situated
+between them.  Unfortunately,[^3but] such mice are specialty items; many of the
+available models are 1990s vintage and have no scroll wheel (or substitute),
+which makes them quite unappealing.  However, there are several good options.
+The 9fans thread from 2022, ["acme and sam - mouse suggestions?"][asm], has
+numerous suggestions, some of which are discussed below.
+
+[^3but]: The rarity of three-button mice with a dedicated button-2 _and_ a
+scroll wheel is unfortunate for everyone, not just Acme users.  Such mice are
+far more comfortable, especially when button-2 is being used frequently, as it
+is with tabbed web browsing or on Unix(-like) systems for pasting the primary
+selection.  Most people have never had such mice and don't know what they are
+missing.
 
 [asm]: https://9fans.topicbox.com/groups/9fans/T49f3cceea70d2b61
 
 ### Laptop touchpads
 
-Laptop touchpads are awkward to use with Acme, since it requires precise mouse
-movements and the ability to use multiple mouse buttons at the same time.
-As such, an external mouse is recommended; however, that is not always
-practical, such as when using a laptop on your lap, without a surface for an
-external mouse.  In such cases, Acme's support for "simulated buttons" may be
+Acme requires precise mouse movements and the ability to use multiple mouse
+buttons at the same time.  This is difficult to achieve with typical laptop
+touchpads.  As such, an external mouse is recommended; however, that is not
+always practical, such as when using a laptop on your lap, without a surface for
+an external mouse.  In such cases, Acme's support for "simulated buttons" may be
 easier to use than the touchpad: holding down Ctrl/Alt (Unix) or Command/Option
-(macOS) will cause button-1 to simulate button-2 or button-3, respectively.
-See [acme(1)](http://man.cat-v.org/plan_9/1/acme) for details.
+(macOS) will cause button-1 to simulate button-2 or button-3, respectively.  See
+[acme(1)](http://man.cat-v.org/plan_9/1/acme) for details.
 
 Many ThinkPad models have three buttons above the touchpad, perfect for Acme.
 
@@ -37,13 +43,13 @@ chording equivalents on the MacBook touchpad.
 
 ### ScrollPoint
 
-A popular mouse among Acme users, used by Rob Pike himself, is the "ScrollPoint
-III Optical Mouse", formerly manufactured by Lenovo and IBM.  While the
-ScrollPoint III was discontinued long ago, used and refurbished models can
+A popular mouse among Acme users, used by Acme author Rob Pike himself, is the
+"ScrollPoint III Optical Mouse", formerly manufactured by Lenovo and IBM.  While
+the ScrollPoint III was discontinued long ago, used and refurbished models can
 be found on eBay and sometimes Newegg.  The ScrollPoint series [was not a
 success][ltt] in the general market, but the ScrollPoint III is one of the few
 mass-produced mice that had three real buttons and a scrolling option.  Instead
-of a scrollwheel, the ScrollPoint III has, beneath button-2, a scrolling stick
+of a scroll wheel, the ScrollPoint III has, beneath button-2, a scrolling stick
 (a glowing blue nub) which is pushed in the direction that one wants to scroll.
 Notably, it supports horizontal scrolling in addition to vertical scrolling.
 
@@ -69,21 +75,20 @@ importantly—vertical scrolling is broken on some systems:
 [li]: https://bugs.freedesktop.org/show_bug.cgi?id=106036
 [il]: https://wildstar84.wordpress.com/2015/06/05/ibmlenovo-scrollpoint-mouse-with-smooth-horizontal-scrolling-in-linux/
 
-When the scrolling stick is working, the ScrollPoint III is a nice mouse for
-any use, not just within Acme.  Not everyone likes the scrolling stick, but I
-came to prefer it to the scrollwheel.  When the scrolling stick is broken,
-the ScrollPoint III is inferior to a normal mouse in every application
-except Acme, since it is then effectively a three-button mouse without a
-scrollwheel, like many models made in the 1990s.  Since the scrolling stick
-is now broken everywhere except macOS, which isn't my daily driver, when using
-the ScrollPoint I typically connect another normal mouse with a scrollwheel and
-switch between them, but this is an unsatisfactory solution.
+When the scrolling stick is working, the ScrollPoint III is a nice mouse for any
+use, not just within Acme.  Not everyone likes the scrolling stick, but I came
+to prefer it to the scroll wheel.  When the scrolling stick is broken, the
+ScrollPoint III is inferior to a normal mouse in every application except Acme,
+since it is then effectively a three-button mouse without a scroll wheel, like
+many models made in the 1990s.  Since the scrolling stick is now broken
+everywhere except macOS, which isn't my daily driver, it is an unsatisfactory
+solution.
 
 ### VerticalMouse
 
 Russ Cox (creator of plan9port) and others use the [Evoluent
 VerticalMouse][evm].  As the name implies, it has a vertical orientation: on
-the right (for the right-handed model), it has three buttons and a scrollwheel.
+the right (for the right-handed model), it has three buttons and a scroll wheel.
 I have not yet tried this myself; it is expensive and the vertical orientation
 is not what I am used to.
 
@@ -94,10 +99,10 @@ is not what I am used to.
 Contour (a company specializing in ergonomic computing peripherals) has made
 two mice models with three real buttons:
 
-- The [Contour Mouse][cm] has three buttons with the scrollwheel moved to the
+- The [Contour Mouse][cm] has three buttons with the scroll wheel moved to the
   side, to be operated by the thumb.  Has a 17-degree slope, not so different
-  than a normal mouse.  Discontinued in 2021 but obtainable.
-- The [Unimouse][uni] has three buttons with a scrollwheel between button-1
+  from a normal mouse.  Discontinued in 2021 but obtainable.
+- The [Unimouse][uni] has three buttons with a scroll wheel between button-1
   and button-2.  Departs further from normal mice than the Contour Mouse,
   with a 35-degree (minimum) slope.
 
@@ -109,11 +114,11 @@ with them.
 
 ### CadMouse
 
-Apparently, CAD applications (much like Acme) use the middle button so much that
-there is a market for mice with dedicated middle buttons.  The [CadMouse][cad]
-(all models) has a "dedicated middle button" as a prominent feature.  All models
-have a scrollwheel between button-1 and button-2.  These mice are relatively
-expensive; currently, the models cost between $80 and $120.
+Apparently, CAD applications (much like Acme) use button-2 so much that there is
+a market for mice with dedicated button-2s.  The [CadMouse][cad] (all models)
+has a "dedicated middle button" as a prominent feature.  All models have a
+scroll wheel between button-1 and button-2.  These mice are relatively expensive;
+currently, the models cost between $80 and $120.
 
 [cad]: https://3dconnexion.com/us/cadmouse/
 
@@ -122,15 +127,45 @@ Some online reviews report that the CadMouse is incompatible with macOS Big Sur
 
 ### Beatus
 
-The Beatus is a CAD mouse from Japan, or so it appears; everyone selling it on
-eBay is based in Japan or a specialist in Japanese goods, so I assume that's
-where it's from, even though I have not found its product page (presumably
-it has one, in Japanese).  The Beatus is a normal-shaped mouse with three
-dedicated buttons.  The Beatus mice which have scrollwheels have them on the
-left side, to be operated with the thumb.  Some Beatus mice have no scrollwheel
-at all, so be sure to scrutinize the product photos on eBay.  They sell for
-$30 to $45 each, not including shipping (for North America, this adds another
-$20 or so).  I ordered one but, as of this writing, have not received it yet.
+The "Beatus" is a mouse made by [Dongguan Xuanshuo Electronics][dxe], a company
+based in southern China.  It is a normal-shaped mouse with three dedicated
+buttons of approximately equal size.  Although not sold in Western outlets, it
+can be obtained from Japanese resellers; a search for "Beatus mouse" on eBay
+finds several.  There are [eight models][dxep], all of which have a dedicated
+button-2, but vary in being: optical or mechanical, wired or wireless, and with
+three scroll wheel configurations: no scroll wheel, scroll wheel on the left
+(thumb operated), and scroll wheel between button-1 and button-2.  All the
+Beatus mice currently available on eBay are optical and wired; and they either
+have no scroll wheel or the thumb-operated scroll wheel on the left.  I ordered
+the latter: it costs from $40 to $65 (including shipping to North America),
+depending on the seller.
+
+[dxe]: http://www.hao1885.com/
+[dxep]: http://www.hao1885.com/products.asp
+
+I have been using the Beatus as my primary mouse and my early impressions are
+generally favorable:
+
+- All three buttons are comfortable to click.  The full-size button-2 is nicer
+  than the compact button-2 on the ScrollPoint III.
+- It took a couple hours to get used to the thumb-operated scroll wheel, but
+  afterward it feels just as natural as middle-finger operated scroll wheels.
+- The scroll wheel is silent: no audible clicking sound when scrolling.
+- It works on every OS (Linux, FreeBSD, macOS, Windows) and with KVM switches.
+  No special driver or tweaking is required.
+- The LED on the bottom is green rather than the usual red.  An n=1 datapoint,
+  but it did not work well on a desk surface that other mice had no trouble
+  with; using a mousepad fixed the issue.
+
+As of this writing, I've only had the mouse for a week.  There are some
+[negative customer reviews on Japanese Amazon][amzb] (which can be machine
+translated into English) complaining of poor durability.
+
+[amzb]: https://www.amazon.co.jp/-/en/Beatus-Button-Perfect-Buttons-Scroll/dp/B07CZ1B7H3
+
+The scroll wheel on the left of the mouse is designed for right-handed mouse
+use.  There is no model which has the scroll wheel on the right for left-handed
+mouse use.
 
 ## Keyboard
 
@@ -142,7 +177,7 @@ a keyboard without a numeric keypad (if you occasionally need the NumPad, e.g.,
 for spreadsheets, you can buy a USB NumPad and put it off to the side).
 
 Here is the approximate travel distance that I measured when moving my right
-hand from the right hand home row and the mouse on the right side with various
+hand from the right hand home row to the mouse on the right side with various
 keyboards that I have:
 
 - Unicomp Model M (104-key full-sized and unusually bulky): 13 inches

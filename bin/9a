@@ -98,6 +98,17 @@ else
 	font2=$font_mono
 fi
 
+files="$@"
+
+# always open $HOME/bookmark, if it exists
+if [ -r "$(readlink -f "$HOME/bookmark")" ]; then
+	if [ -z "$files" ]; then
+		# open $PWD as Acme does by default when no files are given
+		files="$(readlink -f "$PWD")"
+	fi
+	files="$files $(readlink -f "$HOME/bookmark")"
+fi
+
 # Run with 9 to prefer plan9port executables within Acme.
 # Suppress error messages (might want to remove this for debugging).
-9 acme $aopts -f $font1 -F $font2 "$@" 2>/dev/null &
+9 acme $aopts -f $font1 -F $font2 $files 2>/dev/null &

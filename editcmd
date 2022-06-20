@@ -13,3 +13,6 @@ Close all files which have been Put.
 
 ,d
 Delete everything in the buffer.
+
+s/\[\[(.*)\]\[(.*)\]\]/\2\n\1/
+Split an Emacs org-mode link into "title<lf>url".

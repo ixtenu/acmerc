@@ -4,6 +4,9 @@ Useful arguments for the Edit command:
 Search for old, replace it with new, and highlight the replacement.  If the
 change is bad, Undo.  Repeat the Edit to move onto the next replacement.
 
+,s/(^|[^a-zA-Z0-9])old($|[^a-zA-Z0-9])/\1new\2/g
+Replace old (whole words only) with new.
+
 -/text/
 $-/text/
 Search backward.  With $: from EOF.
@@ -15,4 +18,5 @@ Close all files which have been Put.
 Delete everything in the buffer.
 
 s/\[\[(.*)\]\[(.*)\]\]/\2\n\1/
-Split an Emacs org-mode link into "title<lf>url".
+s/\[\[(.*)\]\[(.*)\]\]/[\2](\1)/
+Split an Emacs org-mode link into "title<lf>url" or a Markdown link.

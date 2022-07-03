@@ -16,7 +16,7 @@ usage() {
 	echo "Use -f to have a proportional font as the primary font." 1>&$1
 	# -i option implemented by https://github.com/ixtenu/plan9port/commit/6146ab0734c5
 	echo "Use -i to enable Spaces ON at start up (requires patched Acme)." 1>&$1
-	echo "Use -c ncol to set the initial number of columns (default 1)." 1>&$1
+	echo "Use -c ncol to set the initial number of columns (default 2)." 1>&$1
 	echo "Use -t tab_stop to customize distance between tab stops (default 4)." 1>&$1
 	exit $(($1 - 1))
 }
@@ -24,7 +24,7 @@ usage() {
 tabstop=4
 fopt=0
 aopts="-a" # always run with -a (equivalent to executing "Indent ON")
-ncol=1
+ncol=2
 while getopts fic:t:h name; do
 	case $name in
 	f) fopt=1;;

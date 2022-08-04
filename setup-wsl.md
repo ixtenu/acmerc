@@ -14,15 +14,33 @@ work also.
 While it is possible to install plan9port without X11, Acme is a GUI program
 and on Linux it will need X11.
 
+### With WSLg
+
 WSLg (Windows Subsystem for Linux GUI) has support for X11 or Wayland GUI
 applications.  WSLg was released as part of Windows 11 and was also available
-in Windows 10 insider builds.  If you have WSLg, skip this section.  I only
-have access to Windows 10 (and I'm not using insider builds), so I have not
-tried to use plan9port applications with WSLg, but I presume it would "just
-work".
+in Windows 10 insider builds.  With WSLg, all you need to do is install Xorg
+(and its development package, to provide the headers needed to build X11
+applications).  For example, on Ubuntu:
 
-It is possible to run X11 applications (like plan9port Acme) with a pre-WSLg
-version of WSL, but this requires manual setup:
+```sh
+sudo apt install xorg xorg-dev
+```
+
+Once Xorg is installed, test that you can launch an X11 application:
+
+```sh
+xcalc &
+```
+
+If that works (and it should work), then that's it, WSL setup is complete.
+Proceed with plan9port installation.
+
+### Without WSLg
+
+Windows 10 (except for certain insider builds) does not have WSLg, and thus
+out-of-the-box it only supports terminal applications.  It _is_ possible to run
+X11 applications (like plan9port Acme) with a pre-WSLg version of WSL, but it
+requires manual installation of a third-party Xorg server:
 
 - Download and install [VcXsrv](https://sourceforge.net/projects/vcxsrv/),
   which is a version of the Xorg server that has been ported to Windows.
@@ -58,8 +76,8 @@ Add the `export DISPLAY` line to your shell's initialization file (e.g.,
 ```sh
 # If running in WSL...
 if [ -d /mnt/c/Windows ]; then
-    # Set DISPLAY for VcXsrv
-    export DISPLAY=$(/sbin/ip route | awk '/default/ { print $3 }'):0
+	# Set DISPLAY for VcXsrv
+	export DISPLAY=$(/sbin/ip route | awk '/default/ { print $3 }'):0
 fi
 ```
 
@@ -69,6 +87,6 @@ That's it.  Adapted from: [VcXsrv & Win10 "Alternative Setup"][vcxw10].
 
 ## Install plan9port in WSL
 
-Once WSL 2 is installed, and X11 is working (either via WSLg or, as detailed
-above, via a third-party X server), plan9port can be installed as it would be
-on Linux.  See [setup.md](setup.md) for details.
+Once WSL 2 is installed, and X11 is working (either via WSLg or via a
+third-party X server, as detailed above), plan9port can be installed as it
+would be on Linux.  See [setup.md](setup.md) for details.

@@ -12,17 +12,20 @@ if [ $# -ne 0 ]; then
 fi
 
 installfile() {
+	lnvopt='-v'
+	[ "$(uname)" = "OpenBSD" ] && lnvopt=
+
 	fp="$(readlink -f $1)"
 	fn="$(basename $1)"
 	lp="$outdir"/"$fn"
 	if [ -e "$lp" ]; then
 		if [ -L "$lp" ]; then
-			ln -svf "$fp" "$lp"
+			ln -sf $lnvopt "$fp" "$lp"
 		else
 			echo "warning: $lp exists and is not a symbolic link, leaving it" 2>&1
 		fi
 	else
-		ln -sv "$fp" "$lp"
+		ln -s $lnvopt "$fp" "$lp"
 	fi
 }
 

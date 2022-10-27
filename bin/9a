@@ -5,7 +5,7 @@ if [ -z "$PLAN9" ]; then
 	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
 	exit 1
 fi
-if ! command -v acme 2>&1 >/dev/null; then
+if ! command -v acme >/dev/null 2>&1; then
 	echo "error: acme not found in PATH, was plan9port installed?" 1>&2
 	exit 1
 fi
@@ -40,7 +40,7 @@ aopts="$aopts -c $ncol"
 
 # add the directory containing this script to the PATH so that other
 # Acme-specific scripts in the same directory will be available within Acme
-bindir="$(cd -- "$(dirname $(readlink -f "$0"))" 2>&1 >/dev/null && pwd -P)"
+bindir="$(cd -- "$(dirname $(readlink -f "$0"))" >/dev/null 2>&1 && pwd -P)"
 export PATH="$bindir:$PATH"
 
 # rc is Plan 9's shell
@@ -56,13 +56,13 @@ export PAGER=nobs
 # this suffices for git commit to open an Acme window.
 export EDITOR=E
 
-if command -v firefox 2>&1 >/dev/null; then
+if command -v firefox >/dev/null 2>&1; then
 	export BROWSER=firefox
-elif command -v brave 2>&1 >/dev/null; then
+elif command -v brave >/dev/null 2>&1; then
 	export BROWSER=brave
-elif command -v netsurf 2>&1 >/dev/null; then
+elif command -v netsurf >/dev/null 2>&1; then
 	export BROWSER=netsurf
-elif command -v netsurf-gtk 2>&1 >/dev/null; then
+elif command -v netsurf-gtk >/dev/null 2>&1; then
 	export BROWSER=netsurf-gtk
 fi
 

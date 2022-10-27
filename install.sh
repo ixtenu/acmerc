@@ -2,7 +2,7 @@
 set -eu
 
 outdir=$(readlink -f "$HOME/bin")
-scriptdir="$(cd -- "$(dirname $(readlink -f "$0"))" 2>&1 >/dev/null && pwd -P)"
+scriptdir="$(cd -- "$(dirname $(readlink -f "$0"))" >/dev/null 2>&1 && pwd -P)"
 
 if [ $# -ne 0 ]; then
 	echo "$0: unexpected arguments: $@" 1>&2

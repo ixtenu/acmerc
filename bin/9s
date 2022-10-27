@@ -5,7 +5,7 @@ if [ -z "$PLAN9" ]; then
 	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
 	exit 1
 fi
-if ! command -v sam 2>&1 >/dev/null; then
+if ! command -v sam >/dev/null 2>&1; then
 	echo "error: sam not found in PATH, was plan9port installed?" 1>&2
 	exit 1
 fi

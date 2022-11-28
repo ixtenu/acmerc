@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 # launch script for plan9port's Sam text editor
 
+if [ -z "$PLAN9" ] && command -v 9 >/dev/null 2>&1; then
+	export PLAN9="$(9 sh -c 'echo $PLAN9')"
+	[ ! -z "$PLAN9" ] && export PATH=$PATH:$PLAN9/bin
+fi
 if [ -z "$PLAN9" ]; then
 	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
 	exit 1

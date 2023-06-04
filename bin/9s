@@ -39,4 +39,10 @@ fi
 export tabstop
 export font=/mnt/font/Hack-Regular/11a/font
 
+# Environment variables which may cause text formatting (colors, bold, etc.) to
+# be suppressed when running external programs via the ! command.
+export TERM=dumb
+export CLICOLOR=0
+export NO_COLOR=1
+
 9 sam "$@" &

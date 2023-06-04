@@ -54,6 +54,8 @@ export acmeshell=rc
 export tabstop
 # Acme's win terminal doesn't do colors, bold, etc.
 export TERM=dumb
+export CLICOLOR=0
+export NO_COLOR=1
 # nobs removes backspaces from man pages
 export PAGER=nobs
 # E opens in Acme and waits for Put.  If git config core.editor is unset,

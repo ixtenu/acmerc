@@ -62,15 +62,13 @@ export PAGER=nobs
 # this suffices for git commit to open an Acme window.
 export EDITOR=E
 
-if command -v firefox >/dev/null 2>&1; then
-	export BROWSER=firefox
-elif command -v brave >/dev/null 2>&1; then
-	export BROWSER=brave
-elif command -v netsurf >/dev/null 2>&1; then
-	export BROWSER=netsurf
-elif command -v netsurf-gtk >/dev/null 2>&1; then
-	export BROWSER=netsurf-gtk
-fi
+browsers='librewolf firefox brave netsurf netsurf-gtk'
+for b in $browsers; do
+	if command -v $b >/dev/null 2>&1; then
+		export BROWSER=$b
+		break
+	fi
+done
 
 if [ ! "$(pgrep plumber)" ]; then
 	echo starting plumber

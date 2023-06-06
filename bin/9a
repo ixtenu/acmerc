@@ -9,17 +9,21 @@ if [ -z "$PLAN9" ]; then
 	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
 	exit 1
 fi
-if ! command -v acme >/dev/null 2>&1; then
-	echo "error: acme not found in PATH, was plan9port installed?" 1>&2
+
+# Run acme via absolute path, in case there is another acme in the PATH.
+acme="$PLAN9/bin/acme"
+if [ ! -x "$acme" ]; then
+	echo "error: $acme not found, was plan9port installed?" 1>&2
 	exit 1
 fi
 
 usage() {
-	echo "usage: $0 [-fi] [-c ncol] [-t tab_stop] [file ...]" 1>&$1
+	echo "usage: $0 [-fi9] [-c ncol] [-t tab_stop] [file ...]" 1>&$1
 	echo "Launch the Acme text editor." 1>&$1
 	echo "Use -f to have a proportional font as the primary font." 1>&$1
 	# -i option implemented by https://github.com/ixtenu/plan9port/commit/6146ab0734c5
 	echo "Use -i to enable Spaces ON at start up (requires patched Acme)." 1>&$1
+	echo "Use -9 to put \$PLAN9/bin at the front of \$PATH." 1>&$1
 	echo "Use -c ncol to set the initial number of columns (default 2)." 1>&$1
 	echo "Use -t tab_stop to customize distance between tab stops (default 4)." 1>&$1
 	exit $(($1 - 1))
@@ -27,12 +31,14 @@ usage() {
 
 tabstop=4
 fopt=0
+nine=
 aopts="-a" # always run with -a (equivalent to executing "Indent ON")
 ncol=2
-while getopts fic:t:h name; do
+while getopts fi9c:t:h name; do
 	case $name in
 	f) fopt=1;;
 	i) aopts="$aopts -i";;
+	9) nine='9';;
 	c) ncol=$OPTARG;;
 	t) tabstop=$OPTARG;;
 	h) usage 1;;
@@ -113,6 +119,5 @@ if [ -r "$(readlink -f "$HOME/bookmark")" ]; then
 	files="$files $(readlink -f "$HOME/bookmark")"
 fi
 
-# Run with 9 to prefer plan9port executables within Acme.
 # Suppress error messages (might want to remove this for debugging).
-9 acme $aopts -f $font1 -F $font2 $files 2>/dev/null &
+$nine $acme $aopts -f $font1 -F $font2 $files 2>/dev/null &

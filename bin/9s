@@ -9,21 +9,27 @@ if [ -z "$PLAN9" ]; then
 	echo "error: PLAN9 not defined, was plan9port installed?" 1>&2
 	exit 1
 fi
-if ! command -v sam >/dev/null 2>&1; then
-	echo "error: sam not found in PATH, was plan9port installed?" 1>&2
+
+# Run sam via absolute path, in case there is another sam in the PATH.
+sam="$PLAN9/bin/sam"
+if [ ! -x "$sam" ]; then
+	echo "error: $sam not found, was plan9port installed?" 1>&2
 	exit 1
 fi
 
 usage() {
-	echo "usage: $0 [-t tab_stop] [file ...]" 1>&$1
+	echo "usage: $0 [-9] [-t tab_stop] [file ...]" 1>&$1
 	echo "Launch the Sam text editor." 1>&$1
+	echo "Use -9 to put \$PLAN9/bin at the front of \$PATH." 1>&$1
 	echo "Use -t tab_stop to customize distance between tab stops (default 4)." 1>&$1
 	exit $(($1 - 1))
 }
 
+nine=
 tabstop=4
-while getopts t:h name; do
+while getopts 9t:h name; do
 	case $name in
+	9) nine='9';;
 	t) tabstop=$OPTARG;;
 	h) usage 1;;
 	?) usage 2;;
@@ -45,4 +51,4 @@ export TERM=dumb
 export CLICOLOR=0
 export NO_COLOR=1
 
-9 sam "$@" &
+$nine $sam "$@" &

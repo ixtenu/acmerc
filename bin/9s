@@ -37,9 +37,9 @@ while getopts 9t:h name; do
 done
 shift $(($OPTIND - 1))
 
-if [ ! "$(pgrep plumber)" ]; then
+if [ ! "$(pgrep '^plumber$')" ]; then
 	echo starting plumber
-	plumber
+	"$PLAN9"/bin/plumber
 fi
 
 export tabstop

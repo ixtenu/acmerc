@@ -76,9 +76,9 @@ for b in $browsers; do
 	fi
 done
 
-if [ ! "$(pgrep plumber)" ]; then
+if [ ! "$(pgrep '^plumber$')" ]; then
 	echo starting plumber
-	plumber
+	"$PLAN9"/bin/plumber
 fi
 
 # Preferred proportional and monospace fonts.  To review the available fonts:

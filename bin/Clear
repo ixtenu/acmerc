@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# Clear the current window, much like "Edit ,d".
+set -e
+
+if [ -z "$winid" ]; then
+	echo "$0: must be run within Acme" 2>&1
+	exit 1
+fi
+
+# set dot (the selected text) to entire buffer
+echo -n ',' | 9p write acme/$winid/addr
+# overwrite dot with nothing
+echo -n | 9p write acme/$winid/data

@@ -24,6 +24,9 @@ of Acme from [plan9port](https://9fans.github.io/plan9port/).
   windows (the inverse of the built-in `Putall` command, which executes `Put`
   on all dirty windows).  Useful after an operation like `git pull` has updated
   many open files.
+- [bin/Clear](bin/Clear) clears the buffer for the current window.  This is
+  equivalent to an `Edit ,d` command, but because `Clear` is one word it can be
+  executed without selecting it first.
 
 ## Miscellaneous
 

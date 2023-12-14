@@ -18,14 +18,16 @@ installfile() {
 	fp="$(readlink -f $1)"
 	fn="$(basename $1)"
 	lp="$outdir"/"$fn"
-	if [ -e "$lp" ]; then
-		if [ -L "$lp" ]; then
+	if [ -L "$lp" ]; then
+		# Don't rewrite the symbolic link unless it's changed.
+		[ -e "$lp" ] && efp="$(readlink -f "$lp")" || efp=
+		if [ "$fp" != "$efp" ]; then
 			ln -sf $lnvopt "$fp" "$lp"
-		else
-			echo "warning: $lp exists and is not a symbolic link, leaving it" 2>&1
 		fi
-	else
+	elif [ ! -e "$lp" ]; then
 		ln -s $lnvopt "$fp" "$lp"
+	else
+		echo "warning: $lp exists and is not a symbolic link, leaving it" 2>&1
 	fi
 }
 

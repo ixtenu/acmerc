@@ -111,7 +111,7 @@ fi
 files="$@"
 
 # always open $HOME/bookmark, if it exists
-if [ -r "$(readlink -f "$HOME/bookmark")" ]; then
+if [ -r "$HOME/bookmark" ]; then
 	if [ -z "$files" ]; then
 		# open $PWD as Acme does by default when no files are given
 		files="$(readlink -f "$PWD")"

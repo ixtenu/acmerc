@@ -2,7 +2,7 @@
 # Execute Get on all non-dirty windows (the inverse of Putall)
 
 if [ "$winid" = "" ]; then
-	echo "$0: must be run within Acme" 2>&1
+	echo "$0: must be run within Acme" 1>&2
 	exit 1
 fi
 

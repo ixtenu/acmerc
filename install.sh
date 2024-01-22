@@ -27,7 +27,7 @@ installfile() {
 	elif [ ! -e "$lp" ]; then
 		ln -s $lnvopt "$fp" "$lp"
 	else
-		echo "warning: $lp exists and is not a symbolic link, leaving it" 2>&1
+		echo "warning: $lp exists and is not a symbolic link, leaving it" 1>&2
 	fi
 }
 

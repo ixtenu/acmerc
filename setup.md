@@ -38,6 +38,8 @@ to be installed separately.
 sudo apt-get install libx11-dev libxext-dev libxt-dev
 # Ubuntu
 sudo apt-get install xorg-dev
+# Void Linux
+sudo xbps-install libXext-devel libXt-devel fontconfig-devel
 # On FreeBSD, OpenBSD, and Arch Linux, installing Xorg seems to install the
 # necessary headers.  Other distributions may vary.
 ```

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-outdir=$(readlink -f "$HOME/bin")
+outdir="$HOME/bin"
 scriptdir="$(cd -- "$(dirname $(readlink -f "$0"))" >/dev/null 2>&1 && pwd -P)"
 
 if [ $# -ne 0 ]; then
@@ -31,5 +31,6 @@ installfile() {
 	fi
 }
 
+mkdir -p "$outdir"
 installfile "$scriptdir/bin/9a"
 installfile "$scriptdir/bin/9s"

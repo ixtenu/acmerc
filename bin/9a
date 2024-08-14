@@ -81,19 +81,20 @@ if [ ! "$(pgrep '^plumber$')" ]; then
 	"$PLAN9"/bin/plumber
 fi
 
-# Preferred proportional and monospace fonts.  To review the available fonts:
+# Preferred proportional and monospace fonts.  Note that Acme will fail to
+# launch if its primary font isn't available.
 #
+# To review the available fonts:
 # fontsrv &
 # 9p ls font | less
 # fg
 # ^C
-if [ "$(uname)" = "Darwin" ]; then
-	font_prop='/mnt/font/LucidaGrande/15a/font'
-	font_mono='/mnt/font/Monaco/15a/font'
-else
-	font_prop='/mnt/font/DejaVuSans/11a/font'
-	font_mono='/mnt/font/Hack-Regular/11a/font'
-fi
+#
+# Use the Go fonts: https://go.dev/blog/go-fonts
+# On Un*x, often packaged under such names as:
+# fonts-go, font-go, go-fonts, go-font, etc.
+font_prop='/mnt/font/GoRegular/13a/font'
+font_mono='/mnt/font/GoMono/12a/font'
 
 if [ $fopt -eq 0 ]; then
 	# By default, use a monospace font as the primary font and a

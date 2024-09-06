@@ -110,8 +110,6 @@ if command -v fc-list >/dev/null 2>&1; then
 	fi
 fi
 
-echo $font_mono
-
 if [ $fopt -eq 0 ]; then
 	# By default, use a monospace font as the primary font and a
 	# proportional font as the secondary font: the reverse of the usual

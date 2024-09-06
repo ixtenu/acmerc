@@ -90,11 +90,27 @@ fi
 # fg
 # ^C
 #
-# Use the Go fonts: https://go.dev/blog/go-fonts
+# Default to fonts which are available out-of-the-box on common Linux distros.
+font_prop='/mnt/font/LiberationSans/13a/font'
+font_mono='/mnt/font/Hack-Regular/11a/font'
+
+# If available, use the Go fonts: https://go.dev/blog/go-fonts
 # On Un*x, often packaged under such names as:
 # fonts-go, font-go, go-fonts, go-font, etc.
-font_prop='/mnt/font/GoRegular/13a/font'
-font_mono='/mnt/font/GoMono/12a/font'
+# Alternatively, use the Nerd Font patched version of Go fonts:
+# https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Go-Mono
+if command -v fc-list >/dev/null 2>&1; then
+	if fc-list | grep -q 'GoMonoNerdFontMono-Regular\.ttf'; then
+		font_mono='/mnt/font/GoMonoNFM/12a/font'
+	elif fc-list | grep -q 'Go-Mono\.ttf'; then
+		font_mono='/mnt/font/GoMono/12a/font'
+	fi
+	if fc-list | grep -q 'Go-Regular\.ttf'; then
+		font_prop='/mnt/font/GoRegular/13a/font'
+	fi
+fi
+
+echo $font_mono
 
 if [ $fopt -eq 0 ]; then
 	# By default, use a monospace font as the primary font and a

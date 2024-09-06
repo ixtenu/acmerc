@@ -43,7 +43,16 @@ if [ ! "$(pgrep '^plumber$')" ]; then
 fi
 
 export tabstop
-export font=/mnt/font/Hack-Regular/11a/font
+
+font='/mnt/font/Hack-Regular/11a/font'
+if command -v fc-list >/dev/null 2>&1; then
+	if fc-list | grep -q 'GoMonoNerdFontMono-Regular\.ttf'; then
+		font='/mnt/font/GoMonoNFM/12a/font'
+	elif fc-list | grep -q 'Go-Mono\.ttf'; then
+		font='/mnt/font/GoMono/12a/font'
+	fi
+fi
+export font
 
 # Environment variables which may cause text formatting (colors, bold, etc.) to
 # be suppressed when running external programs via the ! command.

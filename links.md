@@ -46,6 +46,8 @@ Scripts, resources, documentation:
   scripts.
 - [mkmik/awesome-acme](https://github.com/mkmik/awesome-acme): links to
   Acme-related tools.
+- [henesy/awesome-acme](https://github.com/henesy/awesome-acme): links to
+  documentation, programs useful with Acme, related projects, etc.
 
 ## Forks
 
@@ -70,6 +72,8 @@ interesting.
   compile-time color themes with a suckless-style config.h and CUA-style
   keyboard shortcuts.  Note that is not a full fork of plan9port; it only
   includes the files for Acme.
+- [japanoise/acme2k](https://github.com/japanoise/acme2k): fork of the above,
+  rebased on upstream plan9port and with a different color scheme.
 - [karahobny/plan9port](https://github.com/karahobny/plan9port): implements CUA
   key bindings and cursor movement with the up/down keys.
 - [lmumar/plan9port](https://github.com/lmumar/plan9port): implements CUA
@@ -111,24 +115,42 @@ Tab expansion can also be enabled at start up with `-i`.  See 9front commit
 
 # Related text editors
 
+Text editors which reproduce (to varying degrees) the look-and-feel of Acme:
+
 - [Edwood](https://github.com/rjkroege/edwood): Go port of and "drop-in
   replacement" for plan9port's Acme.  Has experimental support for
   running without plan9port's infrastructure.
-- [A](https://github.com/as/a): Text editor written in Go and inspired
-  by Acme; "still in the alpha stage".
-  Not to be confused with [davidrjenni/A](https://github.com/davidrjenni/A).
 - [Wily](http://www.cse.yorku.ca/~oz/wily/): An Acme-inspired editor for
   Unix; created in the 1990s, long before plan9port existed.  Newest
   release is from 2006.
-- [Sam](http://sam.cat-v.org/): The text editor which Rob Pike wrote
+- [jmigpin/editor](https://github.com/jmigpin/editor): an Acme-inspired text
+  editor written in Go.  Retains the simple UX of Acme while implementing
+  advanced features.
+- [Anvil](https://anvil-editor.net/) is an Acme-inspired editor written in Go,
+  using [Gio](https://gioui.org/) as the GUI toolkit.  Supports quite a few
+  features which Acme does not, such as syntax highlighting and editing remote
+  files over SSH.
+- [A](https://github.com/as/a): Text editor written in Go and inspired
+  by Acme; "still in the alpha stage".
+  Not to be confused with [davidrjenni/A](https://github.com/davidrjenni/A).
+
+Text editors which are ancestral to Acme:
+
+- [Sam](http://sam.cat-v.org/): the text editor which Rob Pike wrote
   prior to Acme.  Originally a Unix text editor (for the Blit windowing
   system), later ported to Plan 9 and included in plan9port.  The Plan 9
   version was ported back to Unix/X11: a standalone version of that code,
   updated and extended with new features not found in other versions of
-  sam, is at [deadpixi/sam](https://github.com/deadpixi/sam).
-- [QED](https://github.com/phonologus/QED): an updated version of the Unix
-  version of the `qed` text editor, a line editor that was derived from Unix's
-  `ed` editor.  Ancestral to sam.
+  sam, is at [deadpixi/sam](https://github.com/deadpixi/sam) (see also
+  [japanoise/sam](https://github.com/japanoise/sam), a fork with some bug
+  fixes and minor enhancements).
+- [qed](https://github.com/phonologus/qed-new): a Unix line editor.
+  An enhanced version of `ed` which is programmable and supports editing
+  multiple files.  Ancestral to sam.  The linked version has been updated to
+  build on modern POSIX systems and to support UTF-8.
+
+Other related text editors:
+
 - [vis](https://github.com/martanne/vis): a terminal text editor which
   combines `vi`'s modal editing with the structural regular expressions
   used by Sam and Acme's `Edit` command.
